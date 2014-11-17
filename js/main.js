@@ -22,21 +22,21 @@ if (typeof String.prototype.replaceAll !== 'function') {
   }
 }
 
-var Protocol = function() {
-  self = this;
+var Protocol = function(){
+  var self = this;
   self.proto_load = {
-    "requestId": "requestId-2",
-    "data": '{"type": "LOAD","media": {"contentId": "##contentId##","contentType": "video/mp4","metadata": {"title": "##title##","subtitle": "##subtitle##"}}}'
+    "namespace": "urn:flint:org.openflint.fling.media",
+    "payload": '{"type": "LOAD", "requestId": "requestId-2", "media": {"contentId": "##contentId##","contentType": "video/mp4","metadata": {"title": "##title##","subtitle": "##subtitle##"}}}'
   };
 
   self.proto_pause = {
-    "requestId": "requestId-4",
-    "data": '{"type": "PAUSE"}'
+    "namespace": "urn:flint:org.openflint.fling.media",
+    "payload": '{"type": "PAUSE", "requestId": "requestId-4"}'
   };
 
   self.proto_play = {
-    "requestId": "requestId-5",
-    "data": '{"type": "PLAY"}'
+    "namespace": "urn:flint:org.openflint.fling.media",
+    "payload": '{"type": "PLAY", "requestId": "requestId-5"}'
   };
 };
 
@@ -86,13 +86,12 @@ function communicate() {
     Context.channel = messageChannel;
     log('Channel opened');
     Context.channel.on("message", function(msg) {
-      data = JSON.parse(msg["data"]);
+      var data = JSON.parse(msg["payload"]);
       if (data.type == 'MEDIA_STATUS') {
         var status = data.status[0];
         log('Channel received ' + JSON.stringify(status));
         if (!Context.status) {
-          document.getElementById('media-info').textContent =
-            'You are watching ' + Context.title;
+          displayMediaInfo('You are watching');
         }
         Context.status = {
           currentTime: status.currentTime,
@@ -105,7 +104,7 @@ function communicate() {
       }
     });
     var protoLoad = new Protocol().proto_load;
-    protoLoad["data"] = protoLoad["data"].replaceAll("##contentId##", Context.urlToFling)
+    protoLoad["payload"] = protoLoad["payload"].replaceAll("##contentId##", Context.urlToFling)
         .replaceAll("##title##", Context.title)
         .replaceAll("##subtitle##", Context.title);
     Context.channel.send(JSON.stringify(protoLoad));
@@ -140,6 +139,11 @@ function onChooseDevice(e) {
   Context.senderDaemon.openApp(appUrl, -1, true);
 }
 
+function displayMediaInfo(prefix) {
+  document.getElementById('media-info').innerHTML =
+      prefix + ' <b>' + Context.title + '</b>';
+}
+
 function onShare(activity) {
   log('onShare ' + JSON.stringify(activity.source.data));
   Context.urlToFling = activity.source.data.url;
@@ -159,16 +163,14 @@ function onShare(activity) {
       log('Youtube ' + url + ' (' + title + ')');
       Context.title = title;
       Context.urlToFling = url;
-      document.getElementById('media-info').textContent =
-        'Choose a device to watch ' + Context.title;
+      displayMediaInfo('Choose a device to watch');
       document.getElementById('info').removeAttribute('hidden');
     }, function(error) {
       alert(error);
     })
   } else {
     Context.title = Context.urlToFling.split('/').reverse()[0].split('.')[0];
-    document.getElementById('media-info').textContent =
-      'Choose a device to watch ' + Context.title;
+    displayMediaInfo('Choose a device to watch');
     document.getElementById('info').removeAttribute('hidden');
   }
 }
