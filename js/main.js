@@ -115,14 +115,18 @@ function communicate() {
   });
 }
 
+function displayMediaInfo(prefix) {
+  document.getElementById('media-info').innerHTML =
+      prefix + ' <b>' + Context.title + '</b>';
+}
+
 function ondisconnect() {
   log('Disconnected!');
   Context.senderDaemon = null;
   Context.channel = null;
   Context.status = null;
   document.getElementById('player').setAttribute('hidden', 'hidden');
-  document.getElementById('media-info').textContent =
-  'Choose a device to watch ' + Context.title;
+  displayMediaInfo('Choose a device to watch');
 }
 
 function onChooseDevice(e) {
@@ -137,11 +141,6 @@ function onChooseDevice(e) {
   Context.senderDaemon = new SenderDaemon(e.target.getAttribute('data-ip'), '~flintplayer');
   communicate();
   Context.senderDaemon.openApp(appUrl, -1, true);
-}
-
-function displayMediaInfo(prefix) {
-  document.getElementById('media-info').innerHTML =
-      prefix + ' <b>' + Context.title + '</b>';
 }
 
 function onShare(activity) {
