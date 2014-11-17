@@ -1,0 +1,33 @@
+{
+  "name": "MatchStick",
+  "type": "privileged",
+  "description": "MatchStick Flinger",
+  "launch_path": "/index.html",
+  "developer": {
+    "name": "The Gaia Team",
+    "url": "https://github.com/mozilla-b2g/gaia"
+  },
+  "permissions": {
+    "udp-socket": { "description": "Used for ssdp implementation." },
+    "systemXHR":  { "description": "Used for ssdp implementation." }
+  },
+  "default_locale": "en-US",
+  "icons": {
+    "57": "/style/icons/icon_57.png",
+    "72": "/style/icons/icon_72.png",
+    "114": "/style/icons/icon_114.png"
+  },
+  "activities": {
+    "share": {
+      "filters": {
+        "url": {
+          "required": true,
+          "pattern2": "https?://m.youtube.com/.*$"
+        }
+       },
+      "disposition": "window",
+      "returnValue": false,
+      "href": "/index.html"
+    }
+  }
+}

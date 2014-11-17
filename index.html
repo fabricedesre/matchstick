@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1">
+    <meta charset="utf-8">
+    <meta name="theme-color" content="#ffffff">
+    <title>MatchStick</title>
+
+    <link rel="stylesheet" type="text/css" href="style/main.css">
+    <link rel="stylesheet" type="text/css" href="style/gaia-icons.css">
+    <link rel="stylesheet" type="text/css" href="shared/style/progress_activity.css"/>
+
+    <script defer src="js/ssdp.js"></script>
+    <script defer src="js/sender_sdk.js"></script>
+    <script defer src="js/youtube.js"></script>
+    <script defer src="js/main.js"></script>
+  </head>
+  <body role="application">
+    <img class="logo" src="style/icons/logo_large.png" alt="MatchStick Logo"/>
+
+    <section id="progress">
+      <h2>Looking for MatchStick devices</h2>
+      <progress></progress>
+    </section>
+
+    <section id="devices" hidden>
+      <h2>MatchStick devices</h2>
+      <ul id="device-list">
+        <!-- add devices here -->
+      </ul>
+    </section>
+    <section id="info" hidden>
+      <p id="media-info"></p>
+    </section>
+    <section id="player" hidden>
+      <button id="play" data-icon="play"></button>
+      <button id="stop" data-icon="stop"></button>
+    </section>
+  </body>
+</html>

@@ -1,0 +1,39 @@
+body {
+  font-family: arial, sans-serif;
+  color: grey;
+  background-color: white;
+}
+
+.logo {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 4em;
+}
+
+#progress, #devices, #info, #player {
+  text-align: center;
+}
+
+#devices ul {
+  text-align: start;
+}
+
+#device-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.device-list-item {
+  font-size: larger;
+  background-color: gray;
+  border: 1px solid #c16a10;
+  border-radius: 15px;
+  padding: 0.5em;
+  margin: 0.5em;
+  color: black;
+}
+
+#play, #stop {
+  font-size: large;
+}
